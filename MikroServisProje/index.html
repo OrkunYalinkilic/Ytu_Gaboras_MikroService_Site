@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="OrkunYalinkilic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Css Dosyası Bağlantısı-->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="../js/jquery-1.11.0.min.js">
+    <link rel="stylesheet" href="../js/lightbox.min.js">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://gaboras.com.tr/wp-content/themes/gaboras/assets/img/android-icon-192x192.png">
+    <title>GABORAS | MİKROSERVİSLER</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+
+            <a id="LogoAlan" href=""> <img style="width: 240px; margin-left: -8px; padding-bottom: 3px; "
+                    src="../img/logo.png"
+                    alt="Gaboras Logo"> </a>
+            <div style="margin-top: -75px; margin-left: 12px;">
+                <div id="UstBanner">
+
+                    <!--       <form action="/action_page.php" method="get">
+                        <input list="browsers" name="browser" id="browser"
+                            style=" margin-left:10px; margin-top: 6px; height: 31px; font-weight: bold; border:yellow; background:#e3e6e9; border:1px solid #e3e6e9; font-size: 14px; color:#002139; width:300px;"
+                            class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <datalist class="dataListSearch" style="width: 400px;" id="browsers">
+                            <option style="width: 400px;" value="Edge">
+                            <option value="Firefox">
+                            <option value="Chrome">
+                            <option value="Opera">
+                            <option value="Safari">
+                        </datalist>
+                    </form> -->
+
+                </div>
+                <div id="mikroServisBaslik"></div>
+            </div>
+        </nav>
+    </div>
+
+    <div id="SolMenuKapsayici">
+        <div id="MenuListeKapsayici">
+            <div id="msListeKapsayiciMenu"></div>
+            <div id="buttonKapsa">
+                <ol id="msButtonOlList">
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div id="SagIcerikKapsayici">
+        <div id="mikroServisBilgiIcerikKapsayici">
+        </div>
+        <p class="totop">
+            <a id="top">
+                <img src="../image/top_go_icon.png">
+            </a>
+        </p>
+    </div>
+
+    <script>
+        function Create2DArray(rows) {
+            var arr = [];
+
+            for (var i = 0; i < rows; i++) {
+                arr[i] = [];
+            }
+
+            return arr;
+        }
+
+        var dataListArray = [];
+
+        var keywordMikroServiceArray = Create2DArray(100);
+        var mikroServisAdlariArray = [];
+
+        keywordMikroServiceArray[0][1] = "tag23";
+        keywordMikroServiceArray[0][0] = "tag234";
+
+        mikroServisAdlariArray[0] = "Mikroservis 1";
+
+        $(".form-control").on("input", function () {
+
+            $(".dataListSearch").append('<option value=' + $(".form-control").val() + '>');
+
+            //alert($(".form-control").val());
+        });
+
+        $(function () {
+            $('#top').click(function () {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 15) {
+                    $('.totop a').fadeIn(500);
+                } else {
+                    $('.totop a').fadeOut(500);
+                }
+            });
+        });
+
+        $("#LogoAlan").click(function () {
+            $('#top').click();
+
+        });
+
+        $("li").click(function () {
+            alert("orkun");
+        })
+
+        $.getJSON("mikroservisK.json", function (data) {
+            data.forEach(function (nesne, index) {
+
+                $("#mikroServis0").click();
+
+                var idName = "mikroServis" + index;
+
+                $('ol#msButtonOlList').append('<li> <button id=' + idName + '></button></li>');
+
+                var image = document.createElement("IMG");
+                image.alt = "Alt information for image";
+                image.setAttribute('class', 'photo');
+                image.src = "../image/right-arrow.png";
+
+                $("#" + idName).html(image);
+
+                $('button#' + idName).append('<div id=' + idName + 'Text></div>');
+
+                $("#" + idName + 'Text').text(nesne.Name);
+
+                $("#" + idName).click(function () {
+
+                    $('.bilgiIcerik').remove();
+
+                    $("#mikroServisBaslik").text(nesne.Name);
+
+                    var titleArray = [];
+
+                    Object.keys(nesne).forEach(key => titleArray.push(key));
+
+                    for (var i = 0; i < titleArray.length; i++) {
+
+                        var anlikTitleID = 'bilgiTur' + titleArray[i];
+                        var anlikTitleIcerikID = 'bilgiIcerik' + titleArray[i];
+
+                        switch (titleArray[i]) {
+
+                            case "Description":
+
+                                var baslikDetayID = "baslikDetay" + titleArray[i];
+                                var servisDetayID = "servisDetay" + titleArray[i];
+
+                                $('div#mikroServisBilgiIcerikKapsayici').append(
+                                    '<div  class="bilgiIcerik"><div id=' + baslikDetayID +
+                                    ' class="bilgiTurBaslik"><div class="bilgiTurBaslikAd" id=' +
+                                    anlikTitleID +
+                                    '></div ></div> <div id=' + servisDetayID +
+                                    '><div class="bilgiTurIcerik" id=' +
+                                    anlikTitleIcerikID + '></div></div></div>');
+
+                                $("#" + baslikDetayID).click(function () {
+
+                                    $("#" + servisDetayID).toggle();
+
+                                });
+
+                                $("#" + anlikTitleID).text(titleArray[i]);
+
+                                var imagesCount = nesne.Description.images.length;
+
+                                i
+                                if (imagesCount == 0) {
+
+                                    $("#" + anlikTitleIcerikID).text(nesne[titleArray[i]]
+                                        .text);
+
+                                } else if (imagesCount == 1) {
+
+                                    $("#" + anlikTitleIcerikID).text(nesne[titleArray[i]]
+                                        .text);
+                                    $("#" + anlikTitleIcerikID).append(
+                                        '<div class="descriptionOneImage"></div>');
+
+                                    var image1 = document.createElement("IMG");
+                                    image1.alt = "Alt information for image";
+                                    image1.setAttribute('class', 'photo');
+                                    image1.src = nesne[titleArray[i]].images[0];
+                                    $(".descriptionOneImage").html(image1);
+                                    $(".descriptionOneImage").html(image1);
+
+                                } else if (imagesCount > 1) {
+
+                                    var anlikIndex = 0;
+
+                                    $("#" + anlikTitleIcerikID).text(nesne[titleArray[i]]
+                                        .text);
+
+                                    $("#" + anlikTitleIcerikID).append(
+                                        '<div class="bilgiIcerik"> <div class="bilgiTurIcerik" id=' +
+                                        anlikTitleIcerikID + 'images' + '></div></div>');
+
+                                    $("#" + anlikTitleIcerikID + "images").append(
+                                        '<div class="sliderGenelKapsayici" > <div class="sliderGenel"><div class="sliderLeft" ><div class="sliderLeftButton" onclick="oncekiResimCagir()"> <img src="img/left-arrow.svg" alt=""></div></div><div class="sliderImgMiddle" ><div class="sliderImgMiddleIcerik" ><img id="slider" src="" alt=""></div><div class="sliderCounter" ><div class="sliderCounterIcerik" >2/3</div></div> </div><div class="sliderRight" > <div class="sliderRightButton" onclick="sonrakiResimCagir() "> <img src="img/right-arrow.svg" alt=""> </div></div></div></div>'
+                                    );
+
+                                    var resimlerDizisi = [];
+
+                                    for (var m = 0; m < nesne.Description.images
+                                        .length; m++) {
+
+                                        resimlerDizisi[m] = nesne.Description.images[m];
+                                    }
+
+                                    var counter = anlikIndex + 1;
+                                    var length = resimlerDizisi.length;
+                                    var counterText = counter + "/" + length;
+
+                                    slider.src = resimlerDizisi[anlikIndex];
+
+                                    $(".sliderCounterIcerik").text(counterText);
+
+                                    $(".sliderLeftButton").click(function () {
+
+                                        anlikIndex--;
+
+                                        if (anlikIndex < 0) {
+                                            anlikIndex = resimlerDizisi.length - 1;
+                                        }
+
+                                        slider.src = resimlerDizisi[anlikIndex];
+
+                                        var counter = anlikIndex + 1;
+                                        var lenght = resimlerDizisi.length;
+                                        var counterText = counter + "/" + length;
+
+                                        $(".sliderCounterIcerik").text(counterText);
+
+                                    });
+
+                                    $(".sliderRightButton").click(function () {
+
+                                        anlikIndex++;
+
+                                        if (anlikIndex > parseInt(resimlerDizisi
+                                                .length - 1)) {
+                                            anlikIndex = 0;
+                                        }
+
+                                        slider.src = resimlerDizisi[anlikIndex];
+                                        var counter = anlikIndex + 1;
+                                        var length = resimlerDizisi.length;
+                                        var counterText = counter + "/" + length;
+
+                                        $(".sliderCounterIcerik").text(counterText);
+
+                                    });
+                                }
+                                break;
+
+                            case "Outhors":
+
+                                var OuthorsbaslikDetayID = "baslikDetay" + titleArray[i];
+                                var OuthorsservisDetayID = "servisDetay" + titleArray[i];
+
+                                $('div#mikroServisBilgiIcerikKapsayici').append(
+                                    '<div  class="bilgiIcerik"><div id=' +
+                                    OuthorsbaslikDetayID +
+                                    ' class="bilgiTurBaslik"><div class="bilgiTurBaslikAd" id=' +
+                                    anlikTitleID +
+                                    '></div ></div> <div id=' + OuthorsservisDetayID +
+                                    '><div class="bilgiTurIcerik" id=' +
+                                    anlikTitleIcerikID + '></div></div></div>');
+
+                                $("#" + OuthorsbaslikDetayID).click(function () {
+
+                                    $("#" + OuthorsservisDetayID).toggle();
+
+                                });
+
+                                $("#" + anlikTitleID).text(titleArray[i]);
+
+                                $("#" + anlikTitleIcerikID).append(
+                                    '<div style="background: transparent;" class="contanier-fluid"><div id="outhorsList" style=" border-style: none; background: transparent; " class="row"></div></div>'
+                                );
+
+                                nesne.Outhors.forEach(function (arrayElementi, indexNo) {
+
+                                    var bilgilerKapsayiciID = indexNo + "Kapsayici";
+
+                                    $("#outhorsList").append(
+                                        '<div style="background: transparent;" class="col-4"> <div id="' +
+                                        bilgilerKapsayiciID +
+                                        '" class="outhorBilgiKapsayici"></div></div>'
+                                    );
+
+                                    var titlesArray = [];
+                                    Object.keys(nesne.Outhors[indexNo]).forEach(
+                                        key => titlesArray
+                                        .push(key));
+
+                                    for (var j = 0; j < titlesArray.length; j++) {
+
+                                        var OuthtitleID = indexNo + titlesArray[j];
+                                        var OuthtitleIcerikID = indexNo +
+                                            titlesArray[j] + "icerik";
+
+                                        $("#" + bilgilerKapsayiciID).append(
+                                            '<div class="outhorBilgi"> <span id=' +
+                                            OuthtitleID +
+                                            ' class="outhorBilgiTitle"> </span><span id=' +
+                                            OuthtitleIcerikID +
+                                            ' class="outhorBilgiIcerik"></span></div>'
+                                        );
+
+                                        $("#" + OuthtitleID).text(titlesArray[j] +
+                                            ": ");
+                                        $("#" + OuthtitleIcerikID).text(
+                                            arrayElementi[titlesArray[j]]);
+                                    }
+                                })
+
+                                break;
+
+                            case "Dependencies":
+
+                                var DependenciesbaslikDetayID = "baslikDetay" + titleArray[i];
+                                var DependenciesservisDetayID = "servisDetay" + titleArray[i];
+
+                                $('div#mikroServisBilgiIcerikKapsayici').append(
+                                    '<div  class="bilgiIcerik"><div id=' +
+                                    DependenciesbaslikDetayID +
+                                    ' class="bilgiTurBaslik"><div class="bilgiTurBaslikAd" id=' +
+                                    anlikTitleID +
+                                    '></div ></div> <div id=' + DependenciesservisDetayID +
+                                    '><div class="bilgiTurIcerik" id=' +
+                                    anlikTitleIcerikID + '></div></div></div>');
+
+                                $("#" + DependenciesbaslikDetayID).click(function () {
+
+                                    $("#" + DependenciesservisDetayID).toggle();
+
+                                });
+
+                                $("#" + anlikTitleID).text(titleArray[i]);
+
+                                $("#" + anlikTitleIcerikID).append(
+                                    '<div style="background: transparent;" class="contanier-fluid"><div id="depSliderKapsayici" style=" border-style: none; background: transparent; " class="row"></div></div>'
+                                );
+
+                                for (var k = 0; k < nesne.Dependencies.length; k++) {
+
+                                    var depNameID = "depName" + k;
+                                    var sliderCoverID = "depCoverSlider" + k;
+                                    var CounterID = "depSliderCounterIcerik" + k;
+                                    var leftButtonID = "depSliderLeftButton" + k;
+                                    var rightButtonID = "depSliderRightButton" + k;
+                                    var depenSliderID = "depenSlider" + k;
+
+                                    depSliderEkle(k, depNameID, sliderCoverID, CounterID,
+                                        leftButtonID, rightButtonID, depenSliderID);
+
+                                    $("#" + depNameID).text(nesne.Dependencies[k].Name);
+
+                                    var guncelIndex = 0;
+
+                                    var desresimlerDizisi = [];
+                                    for (var x = 0; x < nesne.Dependencies[k].images
+                                        .length; x++) {
+                                        desresimlerDizisi[x] = nesne.Dependencies[k].images[
+                                            x];
+                                    }
+
+                                    var counterGuncel = guncelIndex + 1;
+                                    var boyut = desresimlerDizisi.length;
+                                    var counterGuncelText = counterGuncel + "/" + boyut;
+
+                                    $("#" + sliderCoverID).append(
+                                        '<img id=' + depenSliderID + ' src=' +
+                                        desresimlerDizisi[guncelIndex] + ' alt="">');
+
+                                    $("#" + CounterID).text(counterGuncelText);
+
+                                }
+
+                                function depSliderEkle(sira, GelendepNameID,
+                                    GelensliderCoverID, GelenCounterID, GelenleftButtonID,
+                                    GelenrightButtonID, GelendepenSliderID) {
+
+                                    $("#depSliderKapsayici").append(
+                                        '<div id="dependCol" class="col-6"><div id=' +
+                                        GelendepNameID +
+                                        ' class="depName">DEPENDENCİES NAME</div><div class="depSliderGenel"><div class="depSliderLeft"><div id=' +
+                                        GelenleftButtonID +
+                                        ' class="depSliderLeftButton" onclick="yaz("orkunykkk")"><img src="img/left-arrow.svg" alt=""></div></div><div class="depSliderImgMiddle"><div id=' +
+                                        GelensliderCoverID +
+                                        ' class="depSliderImgMiddleIcerik"></div><div class="depSliderCounter"><div id=' +
+                                        GelenCounterID +
+                                        ' class="depSliderCounterIcerik">2/3</div></div></div><div class="depSliderRight"><div id=' +
+                                        GelenrightButtonID +
+                                        ' class="depSliderRightButton"><img src="img/right-arrow.svg" alt=""></div></div></div></div>'
+                                    );
+
+                                    var guncelIndex = 0;
+
+                                    var desresimlerDizisi = [];
+                                    for (var x = 0; x < nesne.Dependencies[sira].images
+                                        .length; x++) {
+                                        desresimlerDizisi[x] = nesne.Dependencies[sira]
+                                            .images[x];
+                                    }
+
+                                    $("#" + GelenrightButtonID).click(function () {
+
+                                        guncelIndex++;
+
+                                        if (guncelIndex > parseInt(desresimlerDizisi
+                                                .length - 1)) {
+                                            guncelIndex = 0;
+                                        }
+
+                                        $("#" + GelendepenSliderID).remove();
+
+                                        $("#" + GelensliderCoverID).append(
+                                            '<img id=' + GelendepenSliderID +
+                                            ' src=' +
+                                            desresimlerDizisi[guncelIndex] +
+                                            ' alt="">');
+
+                                        var counterGuncel = guncelIndex + 1;
+                                        var boyut = desresimlerDizisi.length;
+                                        var counterGuncelText = counterGuncel +
+                                            "/" + boyut;
+
+                                        $("#" + GelenCounterID).text(
+                                            counterGuncelText);
+                                    });
+
+                                    $("#" + GelenleftButtonID).click(function () {
+
+                                        guncelIndex--;
+
+                                        if (guncelIndex < 0) {
+                                            guncelIndex = desresimlerDizisi.length - 1;
+                                        }
+
+                                        $("#" + GelendepenSliderID).remove();
+
+                                        $("#" + GelensliderCoverID).append(
+                                            '<img id="' + GelendepenSliderID +
+                                            '" src=' +
+                                            desresimlerDizisi[guncelIndex] +
+                                            ' alt="">');
+
+                                        var counterGuncel = guncelIndex + 1;
+                                        var boyut = desresimlerDizisi.length;
+                                        var counterGuncelText = counterGuncel +
+                                            "/" + boyut;
+
+                                        $("#" + GelenCounterID).text(
+                                            counterGuncelText);
+
+                                    });
+                                }
+
+                                break;
+
+                            case "Repo":
+
+                                var DescriptionbaslikDetayID = "baslikDetay" + titleArray[i];
+                                var DescriptionservisDetayID = "servisDetay" + titleArray[i];
+
+                                $('div#mikroServisBilgiIcerikKapsayici').append(
+                                    '<div  class="bilgiIcerik"><div id=' +
+                                    DescriptionbaslikDetayID +
+                                    ' class="bilgiTurBaslik"><div class="bilgiTurBaslikAd" id=' +
+                                    anlikTitleID +
+                                    '></div ></div> <div id=' + DescriptionservisDetayID +
+                                    '><div class="bilgiTurIcerik" id=' +
+                                    anlikTitleIcerikID + '></div></div></div>');
+
+                                $("#" + DescriptionbaslikDetayID).click(function () {
+
+                                    $("#" + DescriptionservisDetayID).toggle();
+
+                                });
+
+                                $("#" + anlikTitleID).text(titleArray[i]);
+
+                                $("#" + anlikTitleIcerikID).append('<a href=' + nesne.Repo +
+                                    ' target="_blank"  > Repository' +
+                                    ' e ulaşmak için tıklayabilirsiniz</a>');
+
+                                break;
+
+                            case "Documentation":
+
+                                var DocumentationbaslikDetayID = "baslikDetay" + titleArray[i];
+                                var DocumentationservisDetayID = "servisDetay" + titleArray[i];
+
+                                $('div#mikroServisBilgiIcerikKapsayici').append(
+                                    '<div  class="bilgiIcerik"><div id=' +
+                                    DocumentationbaslikDetayID +
+                                    ' class="bilgiTurBaslik"><div class="bilgiTurBaslikAd" id=' +
+                                    anlikTitleID +
+                                    '></div ></div> <div id=' + DocumentationservisDetayID +
+                                    '><div class="bilgiTurIcerik" id=' +
+                                    anlikTitleIcerikID + '></div></div></div>');
+
+                                $("#" + DocumentationbaslikDetayID).click(function () {
+                                    $("#" + DocumentationservisDetayID).toggle();
+                                });
+
+                                $("#" + anlikTitleID).text(titleArray[i]);
+
+                                $("#" + anlikTitleIcerikID).append('<a href=' + nesne
+                                    .Documentation + ' target="_blank"  > Documentation' +
+                                    ' e ulaşmak için tıklayabilirsiniz</a>');
+
+                                break;
+
+                            case "Keywords":
+
+                                var KeywordsbaslikDetayID = "baslikDetay" + titleArray[i];
+                                var KeywordsservisDetayID = "servisDetay" + titleArray[i];
+
+                                $('div#mikroServisBilgiIcerikKapsayici').append(
+                                    '<div  class="bilgiIcerik"><div id=' +
+                                    KeywordsbaslikDetayID +
+                                    ' class="bilgiTurBaslik"><div class="bilgiTurBaslikAd" id=' +
+                                    anlikTitleID +
+                                    '></div ></div> <div id=' + KeywordsservisDetayID +
+                                    '><div class="bilgiTurIcerik" id=' +
+                                    anlikTitleIcerikID + '></div></div></div>');
+
+                                $("#" + KeywordsbaslikDetayID).click(function () {
+
+                                    $("#" + KeywordsservisDetayID).toggle();
+
+                                });
+
+                                $("#" + anlikTitleID).text(titleArray[i]);
+
+                                $("#" + anlikTitleIcerikID).append(
+                                    '<div style="margin-left:20px; width:95%; margin-top:15px; margin-bottom:-10px; background: transparent;" class="contanier-fluid"><div id="keywordsList" style=" border-style: none; background: transparent; " class="row"></div></div>'
+                                );
+
+                                for (var g = 0; g < nesne.Keywords.length; g++) {
+
+                                    $("#keywordsList").append(
+                                        '<div style="  background: transparent;" class="col-1.9"><div class="keywordKapsayici" ><div class="keywordDetay">' +
+                                        nesne.Keywords[g] + '</div></div></div>'
+                                    );
+                                }
+
+                                break;
+
+                            default:
+                                console.log("json error");
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
